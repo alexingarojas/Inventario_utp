@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: inventario-postgres
+    environment:
+      POSTGRES_DB: inventory_db
+      POSTGRES_USER: inventory_user
+      POSTGRES_PASSWORD: inventory_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - inventario-red
+
+  redis:
+    image: redis:7-alpine
+    container_name: inventario-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - inventario-red
+
+networks:
+  inventario-red:
+    driver: bridge
