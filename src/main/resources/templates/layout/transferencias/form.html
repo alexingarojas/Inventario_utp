@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Nueva Transferencia</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>
+                <i class="bi bi-arrow-left-right"></i> Nueva Transferencia
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/transferencias/guardar}" th:object="${transferencia}" method="post" class="needs-validation" novalidate>
+
+                        <div class="mb-3">
+                            <label for="productoId" class="form-label">Producto <span class="text-danger">*</span></label>
+                            <select class="form-select" id="productoId" th:field="*{productoId}"
+                                    th:classappend="${#fields.hasErrors('productoId')} ? 'is-invalid' : ''">
+                                <option value="">-- Seleccionar Producto --</option>
+                                <option th:each="p : ${productos}" 
+                                        th:value="${p.id}" 
+                                        th:text="${p.nombre} + ' (' + ${p.codigo} + ')'"
+                                        th:selected="${p.id == productoSeleccionado}"></option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('productoId')}">
+                                <span th:errors="*{productoId}"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="origenId" class="form-label">Almacén Origen <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="origenId" th:field="*{origenId}"
+                                            th:classappend="${#fields.hasErrors('origenId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option th:each="a : ${almacenes}" 
+                                                th:value="${a.id}" 
+                                                th:text="${a.nombre} + ' (' + ${a.codigo} + ')'"
+                                                th:selected="${a.id == origenSeleccionado}"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('origenId')}">
+                                        <span th:errors="*{origenId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="destinoId" class="form-label">Almacén Destino <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="destinoId" th:field="*{destinoId}"
+                                            th:classappend="${#fields.hasErrors('destinoId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option th:each="a : ${almacenes}" 
+                                                th:value="${a.id}" 
+                                                th:text="${a.nombre} + ' (' + ${a.codigo} + ')'"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('destinoId')}">
+                                        <span th:errors="*{destinoId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cantidad" class="form-label">Cantidad <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="cantidad" th:field="*{cantidad}"
+                                           min="1"
+                                           th:classappend="${#fields.hasErrors('cantidad')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('cantidad')}">
+                                        <span th:errors="*{cantidad}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="estrategia" class="form-label">Estrategia</label>
+                                    <select class="form-select" id="estrategia" th:field="*{estrategia}">
+                                        <option value="">-- Sin Estrategia (Estándar) --</option>
+                                        <option value="estandar">Estándar</option>
+                                        <option value="conservadora">Conservadora</option>
+                                    </select>
+                                    <small class="text-muted">Define reglas para la transferencia</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Realizar Transferencia
+                            </button>
+                            <a href="/transferencias" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

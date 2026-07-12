@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Nueva Reserva</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>
+                <i class="bi bi-plus-circle"></i> Nueva Reserva
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post" class="needs-validation" novalidate>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productoId" class="form-label">Producto <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="productoId" th:field="*{productoId}"
+                                            th:classappend="${#fields.hasErrors('productoId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar Producto --</option>
+                                        <option th:each="p : ${productos}" 
+                                                th:value="${p.id}" 
+                                                th:text="${p.nombre}"
+                                                th:selected="${p.id == productoSeleccionado}"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('productoId')}">
+                                        <span th:errors="*{productoId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="almacenId" class="form-label">Almacén <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="almacenId" th:field="*{almacenId}"
+                                            th:classappend="${#fields.hasErrors('almacenId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar Almacén --</option>
+                                        <option th:each="a : ${almacenes}" 
+                                                th:value="${a.id}" 
+                                                th:text="${a.nombre}"
+                                                th:selected="${a.id == almacenSeleccionado}"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('almacenId')}">
+                                        <span th:errors="*{almacenId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cantidad" class="form-label">Cantidad <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="cantidad" th:field="*{cantidad}"
+                                           min="1"
+                                           th:classappend="${#fields.hasErrors('cantidad')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('cantidad')}">
+                                        <span th:errors="*{cantidad}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="referencia" class="form-label">Referencia <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="referencia" th:field="*{referencia}"
+                                           placeholder="Ej: ORD-001"
+                                           th:classappend="${#fields.hasErrors('referencia')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('referencia')}">
+                                        <span th:errors="*{referencia}"></span>
+                                    </div>
+                                    <small class="text-muted">Identificador único para esta reserva (ej: número de orden)</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Crear Reserva
+                            </button>
+                            <a href="/reservas" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

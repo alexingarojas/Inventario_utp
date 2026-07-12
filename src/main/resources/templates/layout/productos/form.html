@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Producto</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>
+                <i class="bi bi-plus-circle" th:if="${esNuevo}"></i>
+                <i class="bi bi-pencil-square" th:unless="${esNuevo}"></i>
+                <span th:text="${esNuevo} ? 'Nuevo Producto' : 'Editar Producto'"></span>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="${esNuevo} ? @{/productos/guardar} : @{/productos/actualizar/{id}(id=${productoId})}"
+                          th:object="${producto}" method="post" class="needs-validation" novalidate>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="codigo" class="form-label">Código <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="codigo" th:field="*{codigo}"
+                                           th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('codigo')}">
+                                        <span th:errors="*{codigo}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                           th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('nombre')}">
+                                        <span th:errors="*{nombre}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="4"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="precio" class="form-label">Precio <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="precio" th:field="*{precio}"
+                                               step="0.01" min="0"
+                                               th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}">
+                                            <span th:errors="*{precio}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="stockMinimo" class="form-label">Stock Mínimo <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="stockMinimo" th:field="*{stockMinimo}"
+                                           min="0"
+                                           th:classappend="${#fields.hasErrors('stockMinimo')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('stockMinimo')}">
+                                        <span th:errors="*{stockMinimo}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i>
+                                <span th:text="${esNuevo} ? 'Guardar Producto' : 'Actualizar Producto'"></span>
+                            </button>
+                            <a href="/productos" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

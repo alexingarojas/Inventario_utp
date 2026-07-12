@@ -1,9 +1,10 @@
 package com.tienda.inventario.fachada;
 
-import com.tienda.inventario.modelo.*;
+import com.tienda.inventario.dto.*;
 import com.tienda.inventario.servicio.InventarioServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,42 +17,55 @@ public class InventarioFachada {
 
     // --- Productos ---
 
-    public Producto agregarProducto(Producto producto) {
-        return servicio.registrarProducto(producto);
+    public ProductoResponseDTO agregarProducto(ProductoRequestDTO dto) {
+        return InventarioMapper.toDTO(servicio.registrarProducto(InventarioMapper.toEntity(dto)));
     }
 
-    public List<Producto> obtenerProductos() {
-        return servicio.listarProductos();
+    public List<ProductoResponseDTO> obtenerProductos() {
+        return InventarioMapper.toProductoDTOs(servicio.listarProductos());
+    }
+
+    public ProductoResponseDTO obtenerProductoPorId(Long id) {
+        return InventarioMapper.toDTO(servicio.obtenerProductoPorId(id));
+    }
+
+    public ProductoResponseDTO actualizarProducto(Long id, ProductoRequestDTO dto) {
+        return InventarioMapper.toDTO(servicio.actualizarProducto(id, InventarioMapper.toEntity(dto)));
     }
 
     // --- Almacenes ---
 
-    public Almacen agregarAlmacen(Almacen almacen) {
-        return servicio.registrarAlmacen(almacen);
+    public AlmacenResponseDTO agregarAlmacen(AlmacenRequestDTO dto) {
+        return InventarioMapper.toDTO(servicio.registrarAlmacen(InventarioMapper.toEntity(dto)));
     }
 
-    public List<Almacen> obtenerAlmacenes() {
-        return servicio.listarAlmacenes();
+    public List<AlmacenResponseDTO> obtenerAlmacenes() {
+        return InventarioMapper.toAlmacenDTOs(servicio.listarAlmacenes());
     }
 
     // --- Stock ---
 
-    public Stock actualizarStock(Long productoId, Long almacenId, Integer cantidad, String notas) {
-        return servicio.actualizarStock(productoId, almacenId, cantidad, notas);
+    public StockResponseDTO actualizarStock(StockRequestDTO dto) {
+        return InventarioMapper.toDTO(servicio.actualizarStock(
+                dto.getProductoId(),
+                dto.getAlmacenId(),
+                dto.getCantidad(),
+                dto.getNotas()
+        ));
     }
 
-    public List<Stock> stockPorProducto(Long productoId) {
-        return servicio.verStockPorProducto(productoId);
+    public List<StockResponseDTO> stockPorProducto(Long productoId) {
+        return InventarioMapper.toStockDTOs(servicio.verStockPorProducto(productoId));
     }
 
-    public List<Stock> stockPorAlmacen(Long almacenId) {
-        return servicio.verStockPorAlmacen(almacenId);
+    public List<StockResponseDTO> stockPorAlmacen(Long almacenId) {
+        return InventarioMapper.toStockDTOs(servicio.verStockPorAlmacen(almacenId));
     }
 
     // --- Reservas ---
 
-    public String reservar(Long productoId, Long almacenId, Integer cantidad, String referencia) {
-        return servicio.reservarStock(productoId, almacenId, cantidad, referencia);
+    public String reservar(ReservaRequestDTO dto) {
+        return servicio.reservarStock(dto.getProductoId(), dto.getAlmacenId(), dto.getCantidad(), dto.getReferencia());
     }
 
     public String cancelarReserva(String referencia) {
@@ -60,18 +74,23 @@ public class InventarioFachada {
 
     // --- Transferencias ---
 
-    public String transferir(Long productoId, Long origenId, Long destinoId,
-                             Integer cantidad, String estrategia) {
-        return servicio.transferirStock(productoId, origenId, destinoId, cantidad, estrategia);
+    public String transferir(TransferenciaRequestDTO dto) {
+        return servicio.transferirStock(
+                dto.getProductoId(),
+                dto.getOrigenId(),
+                dto.getDestinoId(),
+                dto.getCantidad(),
+                dto.getEstrategia()
+        );
     }
 
     // --- Alertas y Reportes ---
 
-    public List<Stock> alertasStockBajo() {
-        return servicio.verAlertasStockBajo();
+    public List<StockResponseDTO> alertasStockBajo() {
+        return InventarioMapper.toStockDTOs(servicio.verAlertasStockBajo());
     }
 
-    public List<Movimiento> reporte(LocalDateTime desde, LocalDateTime hasta) {
-        return servicio.generarReporte(desde, hasta);
+    public List<MovimientoResponseDTO> reporte(LocalDateTime desde, LocalDateTime hasta) {
+        return InventarioMapper.toMovimientoDTOs(servicio.generarReporte(desde, hasta));
     }
 }

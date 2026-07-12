@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Inicio</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h1 class="mb-4"><i class="bi bi-speedometer2"></i> Inventario Rojitas</h1>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="bi bi-box2"></i> Productos</h6>
+                    <p class="display-6 mb-0" th:text="${totalProductos}">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="bi bi-building"></i> Almacenes</h6>
+                    <p class="display-6 mb-0" th:text="${totalAlmacenes}">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-danger shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="bi bi-exclamation-triangle"></i> Alertas de Stock Bajo</h6>
+                    <p class="display-6 mb-0" th:text="${totalAlertas}">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/productos" class="btn btn-outline-primary me-2">Ver Productos</a>
+        <a href="/almacenes" class="btn btn-outline-success me-2">Ver Almacenes</a>
+        <a href="/alertas" class="btn btn-outline-danger">Ver Alertas</a>
+    </div>
+
+</div>
+</body>
+</html>

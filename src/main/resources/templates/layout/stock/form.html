@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Actualizar Stock</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>
+                <i class="bi bi-pencil-square"></i> Actualizar Stock
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/stock/guardar}" th:object="${stock}" method="post" class="needs-validation" novalidate>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productoId" class="form-label">Producto <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="productoId" th:field="*{productoId}"
+                                            th:classappend="${#fields.hasErrors('productoId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar Producto --</option>
+                                        <option th:each="p : ${productos}" 
+                                                th:value="${p.id}" 
+                                                th:text="${p.nombre} + ' (' + ${p.codigo} + ')'"
+                                                th:selected="${p.id == productoSeleccionado}"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('productoId')}">
+                                        <span th:errors="*{productoId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="almacenId" class="form-label">Almacén <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="almacenId" th:field="*{almacenId}"
+                                            th:classappend="${#fields.hasErrors('almacenId')} ? 'is-invalid' : ''">
+                                        <option value="">-- Seleccionar Almacén --</option>
+                                        <option th:each="a : ${almacenes}" 
+                                                th:value="${a.id}" 
+                                                th:text="${a.nombre} + ' (' + ${a.codigo} + ')'"
+                                                th:selected="${a.id == almacenSeleccionado}"></option>
+                                    </select>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('almacenId')}">
+                                        <span th:errors="*{almacenId}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="cantidad" th:field="*{cantidad}"
+                                   min="0"
+                                   th:classappend="${#fields.hasErrors('cantidad')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('cantidad')}">
+                                <span th:errors="*{cantidad}"></span>
+                            </div>
+                            <small class="text-muted">Cantidad total a registrar en este almacén</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notas" class="form-label">Notas</label>
+                            <textarea class="form-control" id="notas" th:field="*{notas}" rows="3" placeholder="Observaciones sobre el movimiento..."></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Actualizar Stock
+                            </button>
+                            <a href="/stock" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

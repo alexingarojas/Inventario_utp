@@ -40,6 +40,21 @@ public class InventarioServicio {
         return productoRepo.findAll();
     }
 
+    public Producto obtenerProductoPorId(Long id) {
+        return productoRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+    }
+
+    public Producto actualizarProducto(Long id, Producto productoActualizado) {
+        Producto producto = obtenerProductoPorId(id);
+        producto.setCodigo(productoActualizado.getCodigo());
+        producto.setNombre(productoActualizado.getNombre());
+        producto.setDescripcion(productoActualizado.getDescripcion());
+        producto.setPrecio(productoActualizado.getPrecio());
+        producto.setStockMinimo(productoActualizado.getStockMinimo());
+        return productoRepo.save(producto);
+    }
+
     // ==================== ALMACENES ====================
 
     @Transactional

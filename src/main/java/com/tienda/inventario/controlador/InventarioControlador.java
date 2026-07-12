@@ -1,7 +1,8 @@
 package com.tienda.inventario.controlador;
 
+import com.tienda.inventario.dto.*;
 import com.tienda.inventario.fachada.InventarioFachada;
-import com.tienda.inventario.modelo.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,63 +21,51 @@ public class InventarioControlador {
     // PRODUCTOS
 
     @PostMapping("/productos")
-    public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto) {
+    public ResponseEntity<ProductoResponseDTO> crearProducto(@Valid @RequestBody ProductoRequestDTO producto) {
         return ResponseEntity.ok(fachada.agregarProducto(producto));
     }
 
     @GetMapping("/productos")
-    public ResponseEntity<List<Producto>> listarProductos() {
+    public ResponseEntity<List<ProductoResponseDTO>> listarProductos() {
         return ResponseEntity.ok(fachada.obtenerProductos());
     }
 
     @GetMapping("/productos/{id}/stock")
-    public ResponseEntity<List<Stock>> verStockProducto(@PathVariable Long id) {
+    public ResponseEntity<List<StockResponseDTO>> verStockProducto(@PathVariable Long id) {
         return ResponseEntity.ok(fachada.stockPorProducto(id));
     }
 
     // ALMACENES
 
     @PostMapping("/almacenes")
-    public ResponseEntity<Almacen> crearAlmacen(@RequestBody Almacen almacen) {
+    public ResponseEntity<AlmacenResponseDTO> crearAlmacen(@Valid @RequestBody AlmacenRequestDTO almacen) {
         return ResponseEntity.ok(fachada.agregarAlmacen(almacen));
     }
 
     @GetMapping("/almacenes")
-    public ResponseEntity<List<Almacen>> listarAlmacenes() {
+    public ResponseEntity<List<AlmacenResponseDTO>> listarAlmacenes() {
         return ResponseEntity.ok(fachada.obtenerAlmacenes());
     }
 
     @GetMapping("/almacenes/{id}/stock")
-    public ResponseEntity<List<Stock>> verStockAlmacen(@PathVariable Long id) {
+    public ResponseEntity<List<StockResponseDTO>> verStockAlmacen(@PathVariable Long id) {
         return ResponseEntity.ok(fachada.stockPorAlmacen(id));
     }
 
     // STOCK
 
     @PostMapping("/stock")
-    public ResponseEntity<Stock> actualizarStock(
-            @RequestParam Long productoId,
-            @RequestParam Long almacenId,
-            @RequestParam Integer cantidad,
-            @RequestParam(required = false) String notas) {
+    public ResponseEntity<StockResponseDTO> actualizarStock(@Valid @RequestBody StockRequestDTO dto) {
 
-        return ResponseEntity.ok(
-                fachada.actualizarStock(productoId, almacenId, cantidad, notas)
-        );
+        return ResponseEntity.ok(fachada.actualizarStock(dto));
     }
 
     // RESERVAS
 
     @PostMapping("/reservas")
-    public ResponseEntity<String> reservar(
-            @RequestParam Long productoId,
-            @RequestParam Long almacenId,
-            @RequestParam Integer cantidad,
-            @RequestParam String referencia) {
+    public ResponseEntity<String> reservar(@Valid @RequestBody ReservaRequestDTO dto) {
 
-        return ResponseEntity.ok(
-                fachada.reservar(productoId, almacenId, cantidad, referencia)
-        );
+        return ResponseEntity.ok(fachada.reservar(dto));
     }
 
     @DeleteMapping("/reservas/{referencia}")
@@ -87,35 +76,22 @@ public class InventarioControlador {
     // TRANSFERENCIAS
 
     @PostMapping("/transferencias")
-    public ResponseEntity<String> transferir(
-            @RequestParam Long productoId,
-            @RequestParam Long origenId,
-            @RequestParam Long destinoId,
-            @RequestParam Integer cantidad,
-            @RequestParam(required = false) String estrategia) {
+    public ResponseEntity<String> transferir(@Valid @RequestBody TransferenciaRequestDTO dto) {
 
-        return ResponseEntity.ok(
-                fachada.transferir(
-                        productoId,
-                        origenId,
-                        destinoId,
-                        cantidad,
-                        estrategia
-                )
-        );
+        return ResponseEntity.ok(fachada.transferir(dto));
     }
 
     // ALERTAS
 
     @GetMapping("/alertas")
-    public ResponseEntity<List<Stock>> verAlertas() {
+    public ResponseEntity<List<StockResponseDTO>> verAlertas() {
         return ResponseEntity.ok(fachada.alertasStockBajo());
     }
 
     // REPORTES
 
     @GetMapping("/reporte")
-    public ResponseEntity<List<Movimiento>> verReporte(
+    public ResponseEntity<List<MovimientoResponseDTO>> verReporte(
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime desde,

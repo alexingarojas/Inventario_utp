@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Stock</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2><i class="bi bi-box-seam"></i> Gestión de Stock</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="/stock/nuevo" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Actualizar Stock
+            </a>
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div th:if="${mensaje}" th:class="'alert alert-' + ${tipo} + ' alert-dismissible fade show'" role="alert">
+        <span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Tabla de productos con su stock -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Producto</th>
+                    <th>Código</th>
+                    <th>Precio</th>
+                    <th>Stock Mínimo</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombre}"></td>
+                    <td th:text="${producto.codigo}"></td>
+                    <td th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}"></td>
+                    <td th:text="${producto.stockMinimo}"></td>
+                    <td th:text="${producto.descripcion}"></td>
+                    <td>
+                        <a th:href="@{/stock/producto/{id}(id=${producto.id})}" class="btn btn-sm btn-info" title="Ver stock en almacenes">
+                            <i class="bi bi-box-seam"></i> Stock
+                        </a>
+                        <a href="/stock/nuevo" class="btn btn-sm btn-warning" title="Actualizar">
+                            <i class="bi bi-arrow-repeat"></i> Act.
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mensaje si no hay productos -->
+    <div th:if="${#lists.isEmpty(productos)}" class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No hay productos registrados.
+    </div>
+
+</div>
+</body>
+</html>
