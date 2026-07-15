@@ -1,9 +1,9 @@
 package com.tienda.inventario.controlador;
 
-import com.tienda.inventario.dto.MovimientoResponseDTO;
-import com.tienda.inventario.dto.StockResponseDTO;
+import com.tienda.inventario.controlador.dto.MovimientoResponseDTO;
+import com.tienda.inventario.controlador.dto.StockResponseDTO;
 import com.tienda.inventario.modelo.Movimiento;
-import com.tienda.inventario.fachada.InventarioFachada;
+import com.tienda.inventario.patron.fachada.InventarioFachada;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

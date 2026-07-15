@@ -1,6 +1,6 @@
-package com.tienda.inventario.kafka;
+package com.tienda.inventario.config.kafka;
 
-import com.tienda.inventario.dto.NotificacionDto;
+import com.tienda.inventario.controlador.dto.NotificacionDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;

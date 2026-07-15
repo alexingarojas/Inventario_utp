@@ -1,4 +1,4 @@
-package com.tienda.inventario.dto;
+package com.tienda.inventario.controlador.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

@@ -1,4 +1,4 @@
-package com.tienda.inventario.dto;
+package com.tienda.inventario.controlador.dto;
 
 import com.tienda.inventario.modelo.Almacen;
 import com.tienda.inventario.modelo.Movimiento;

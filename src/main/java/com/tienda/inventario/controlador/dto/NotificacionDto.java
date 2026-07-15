@@ -1,4 +1,4 @@
-package com.tienda.inventario.dto;
+package com.tienda.inventario.controlador.dto;
 
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificacionDto {
-    
+
     private String productoNombre;
     private String almacenNombre;
     private Integer disponible;

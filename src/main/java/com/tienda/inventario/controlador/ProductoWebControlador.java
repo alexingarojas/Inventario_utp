@@ -1,9 +1,9 @@
 package com.tienda.inventario.controlador;
 
-import com.tienda.inventario.dto.ProductoRequestDTO;
-import com.tienda.inventario.dto.ProductoResponseDTO;
-import com.tienda.inventario.dto.StockResponseDTO;
-import com.tienda.inventario.fachada.InventarioFachada;
+import com.tienda.inventario.controlador.dto.ProductoRequestDTO;
+import com.tienda.inventario.controlador.dto.ProductoResponseDTO;
+import com.tienda.inventario.controlador.dto.StockResponseDTO;
+import com.tienda.inventario.patron.fachada.InventarioFachada;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

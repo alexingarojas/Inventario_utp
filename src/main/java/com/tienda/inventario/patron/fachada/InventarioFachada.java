@@ -1,6 +1,6 @@
-package com.tienda.inventario.fachada;
+package com.tienda.inventario.patron.fachada;
 
-import com.tienda.inventario.dto.*;
+import com.tienda.inventario.controlador.dto.*;
 import com.tienda.inventario.servicio.InventarioServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

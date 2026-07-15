@@ -1,8 +1,7 @@
-package com.tienda.inventario.dto;
+package com.tienda.inventario.controlador.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservaRequestDTO {
+public class StockRequestDTO {
 
     @NotNull(message = "productoId es obligatorio")
     private Long productoId;
@@ -21,10 +20,9 @@ public class ReservaRequestDTO {
     private Long almacenId;
 
     @NotNull(message = "cantidad es obligatoria")
-    @Positive(message = "cantidad debe ser mayor a 0")
+    @PositiveOrZero(message = "cantidad debe ser mayor o igual a 0")
     private Integer cantidad;
 
-    @NotBlank(message = "referencia es obligatoria")
-    private String referencia;
+    private String notas;
 }
 

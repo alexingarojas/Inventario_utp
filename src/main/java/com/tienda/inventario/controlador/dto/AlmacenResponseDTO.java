@@ -1,24 +1,22 @@
-package com.tienda.inventario.dto;
+package com.tienda.inventario.controlador.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductoResponseDTO {
+public class AlmacenResponseDTO {
     private Long id;
     private String codigo;
     private String nombre;
-    private String descripcion;
-    private BigDecimal precio;
-    private Integer stockMinimo;
+    private String direccion;
+    private String ciudad;
     private LocalDateTime fechaRegistro;
 }
 

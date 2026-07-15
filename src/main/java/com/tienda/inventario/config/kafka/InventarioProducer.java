@@ -1,6 +1,6 @@
-package com.tienda.inventario.kafka;
+package com.tienda.inventario.config.kafka;
 
-import com.tienda.inventario.dto.NotificacionDto;
+import com.tienda.inventario.controlador.dto.NotificacionDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,8 +21,8 @@ public class InventarioProducer {
     public void enviarMensaje(NotificacionDto mensaje) {
         CompletableFuture.runAsync(() -> {
             try {
-                Thread.sleep(5000); // 2 segundos de espera
-                LOGGER.info("Enviando mensaje retrasado a Kafka: {}", mensaje);
+                Thread.sleep(5000);
+                LOGGER.info("Enviando mensaje  a Kafka: {}", mensaje);
                 kafkaTemplate.send("mi-topico-inventario", mensaje);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

@@ -1,7 +1,7 @@
 package com.tienda.inventario.patron.observador;
 
-import com.tienda.inventario.dto.NotificacionDto;
-import com.tienda.inventario.kafka.InventarioProducer;
+import com.tienda.inventario.controlador.dto.NotificacionDto;
+import com.tienda.inventario.config.kafka.InventarioProducer;
 import com.tienda.inventario.modelo.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

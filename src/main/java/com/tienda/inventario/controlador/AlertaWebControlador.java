@@ -1,7 +1,7 @@
 package com.tienda.inventario.controlador;
 
-import com.tienda.inventario.dto.StockResponseDTO;
-import com.tienda.inventario.fachada.InventarioFachada;
+import com.tienda.inventario.controlador.dto.StockResponseDTO;
+import com.tienda.inventario.patron.fachada.InventarioFachada;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
