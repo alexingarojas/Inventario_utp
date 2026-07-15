@@ -135,6 +135,7 @@ public class InventarioServicio {
 
         new RegistrarMovimiento(movimientoRepo, stock.getProducto(), null, stock.getAlmacen(),
                 Movimiento.TipoMovimiento.RESERVA, cantidad, referencia, "Reserva creada").ejecutar();
+        notificarObservadores(stock, stock.getCantidad() + cantidad);
 
         return "Reserva creada: " + referencia;
     }

@@ -2,6 +2,8 @@ package com.tienda.inventario.controlador;
 
 import com.tienda.inventario.dto.AlmacenRequestDTO;
 import com.tienda.inventario.dto.AlmacenResponseDTO;
+import com.tienda.inventario.dto.ProductoResponseDTO;
+import com.tienda.inventario.dto.StockResponseDTO;
 import com.tienda.inventario.fachada.InventarioFachada;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,9 @@ public class AlmacenWebControlador {
     @GetMapping
     public String listar(Model model) {
         List<AlmacenResponseDTO> almacenes = fachada.obtenerAlmacenes();
+        List<StockResponseDTO> alertas = fachada.alertasStockBajo();
         model.addAttribute("almacenes", almacenes);
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/almacenes/lista";
     }
 

@@ -21,6 +21,7 @@ public class AlertaWebControlador {
     public String listar(Model model) {
         List<StockResponseDTO> alertas = fachada.alertasStockBajo();
         model.addAttribute("alertas", alertas);
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/alertas/lista";
     }
 }

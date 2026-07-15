@@ -16,6 +16,7 @@ public class StockResponseDTO {
     private Long productoId;
     private String productoCodigo;
     private String productoNombre;
+    private Integer productoStockMinimo;
     private Long almacenId;
     private String almacenCodigo;
     private String almacenNombre;

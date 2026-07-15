@@ -23,13 +23,13 @@ public class AlertaStockBajo implements ObservadorStock {
             mensaje.setAlmacenNombre(stock.getAlmacen().getNombre());
             mensaje.setDisponible(disponible);
             mensaje.setMinimo(minimo);
-            producer.enviarMensaje(mensaje);
             System.out.println("⚠️ ALERTA: Stock bajo en producto '"
                     + stock.getProducto().getNombre()
                     + "' en almacén '"
                     + stock.getAlmacen().getNombre()
                     + "' - Disponible: " + disponible
                     + " / Mínimo: " + minimo);
+            producer.enviarMensaje(mensaje);
         }
     }
 }

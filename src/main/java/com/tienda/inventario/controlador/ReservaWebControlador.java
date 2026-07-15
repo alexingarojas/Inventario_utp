@@ -26,6 +26,8 @@ public class ReservaWebControlador {
     public String listar(Model model) {
         model.addAttribute("productos", fachada.obtenerProductos());
         model.addAttribute("almacenes", fachada.obtenerAlmacenes());
+        List<StockResponseDTO> alertas = fachada.alertasStockBajo();
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/reservas/lista";
     }
 

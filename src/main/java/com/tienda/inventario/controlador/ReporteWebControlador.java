@@ -1,6 +1,7 @@
 package com.tienda.inventario.controlador;
 
 import com.tienda.inventario.dto.MovimientoResponseDTO;
+import com.tienda.inventario.dto.StockResponseDTO;
 import com.tienda.inventario.modelo.Movimiento;
 import com.tienda.inventario.fachada.InventarioFachada;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class ReporteWebControlador {
         LocalDateTime hastaDateTime = fechaHasta.atTime(23, 59, 59);
 
         List<MovimientoResponseDTO> movimientos = fachada.reporte(desdeDateTime, hastaDateTime);
+        List<StockResponseDTO> alertas = fachada.alertasStockBajo();
 
         // Filtro adicional por producto
         if (productoId != null) {
@@ -63,6 +65,7 @@ public class ReporteWebControlador {
         model.addAttribute("tipoMovimiento", tipoMovimiento);
         model.addAttribute("productos", fachada.obtenerProductos());
         model.addAttribute("tiposMovimiento", Movimiento.TipoMovimiento.values());
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/reportes/index";
     }
 }

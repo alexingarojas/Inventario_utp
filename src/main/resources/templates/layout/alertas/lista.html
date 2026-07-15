@@ -27,9 +27,10 @@
                     <th>Producto</th>
                     <th>Código</th>
                     <th>Almacén</th>
-                    <th>Cantidad Actual</th>
-                    <th>Stock Mínimo</th>
-                    <th>Diferencia</th>
+                    <th>Cantidad Total</th>
+                    <th>Cantidad Reservada</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Stock Minimo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -40,11 +41,16 @@
                     <td th:text="${alerta.productoCodigo}"></td>
                     <td th:text="${alerta.almacenNombre}"></td>
                     <td>
-                        <span class="badge bg-danger" th:text="${alerta.cantidad}"></span>
+                        <span class="badge bg-info" th:text="${alerta.cantidad}"></span>
                     </td>
-                    <td th:text="${alerta.productoNombre}"></td>
                     <td>
-                        <span class="badge bg-warning" th:text="${alerta.cantidadDisponible}"></span>
+                        <span class="badge bg-warning" th:text="${alerta.cantidadReservada}"></span>
+                    </td>
+                    <td>
+                        <span class="badge bg-danger" th:text="${alerta.cantidadDisponible}"></span>
+                    </td>
+                    <td>
+                        <span  th:text="${alerta.productoStockMinimo}"></span>
                     </td>
                     <td>
                         <a href="/stock/nuevo" class="btn btn-sm btn-success">

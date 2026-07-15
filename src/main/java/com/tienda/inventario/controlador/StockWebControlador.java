@@ -25,7 +25,9 @@ public class StockWebControlador {
     @GetMapping
     public String listar(Model model) {
         List<ProductoResponseDTO> productos = fachada.obtenerProductos();
+        List<StockResponseDTO> alertas = fachada.alertasStockBajo();
         model.addAttribute("productos", productos);
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/stock/lista";
     }
 

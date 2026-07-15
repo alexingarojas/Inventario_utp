@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Service
 public class InventarioProducer {
 
@@ -17,7 +19,14 @@ public class InventarioProducer {
     }
 
     public void enviarMensaje(NotificacionDto mensaje) {
-        LOGGER.info("Enviando mensaje a Kafka: {}", mensaje);
-        kafkaTemplate.send("mi-topico-inventario", mensaje);
+        CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(5000); // 2 segundos de espera
+                LOGGER.info("Enviando mensaje retrasado a Kafka: {}", mensaje);
+                kafkaTemplate.send("mi-topico-inventario", mensaje);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
     }
 }

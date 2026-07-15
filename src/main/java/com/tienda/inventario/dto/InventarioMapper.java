@@ -68,6 +68,7 @@ public final class InventarioMapper {
                 .productoId(entity.getProducto().getId())
                 .productoCodigo(entity.getProducto().getCodigo())
                 .productoNombre(entity.getProducto().getNombre())
+                .productoStockMinimo(entity.getProducto().getStockMinimo())
                 .almacenId(entity.getAlmacen().getId())
                 .almacenCodigo(entity.getAlmacen().getCodigo())
                 .almacenNombre(entity.getAlmacen().getNombre())

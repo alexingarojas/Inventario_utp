@@ -2,6 +2,7 @@ package com.tienda.inventario.controlador;
 
 import com.tienda.inventario.dto.ProductoRequestDTO;
 import com.tienda.inventario.dto.ProductoResponseDTO;
+import com.tienda.inventario.dto.StockResponseDTO;
 import com.tienda.inventario.fachada.InventarioFachada;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,9 @@ public class ProductoWebControlador {
     @GetMapping
     public String listar(Model model) {
         List<ProductoResponseDTO> productos = fachada.obtenerProductos();
+        List<StockResponseDTO> alertas = fachada.alertasStockBajo();
         model.addAttribute("productos", productos);
+        model.addAttribute("totalAlertas", alertas.size());
         return "layout/productos/lista";
     }
 
