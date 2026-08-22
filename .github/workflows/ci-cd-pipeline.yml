@@ -1,0 +1,38 @@
+name: Pipeline CI/CD Completo
+
+on:
+  push:
+    branches: [ "feature/deploy-v1" ]
+
+jobs:
+  # ----------------------------------------
+  # FASE 1: CI (Integración Continua)
+  # ----------------------------------------
+  ci-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar entorno Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compilar y ejecutar pruebas
+        run: mvn clean test
+
+  # ----------------------------------------
+  # FASE 2: CD (Despliegue Continuo)
+  # ----------------------------------------
+  cd-deploy:
+    # Esto es vital: obliga a esperar que la fase 'ci-build-and-test' termine y sea exitosa
+    needs: ci-build-and-test
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulación de Despliegue
+        # Aquí imprimirimos el texto solicitado
+        run: echo "desplegado"
